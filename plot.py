@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Circle
 
 
-def plot_initial_geometry(x_d, y_d, x_b, y_b):
+def plot_initial_geometry(x_d, y_d, x_b, y_b, extra_points=None):
     """Plot domain and boundary collocation points."""
     fig, ax = plt.subplots(figsize=(10, 8), facecolor='white')
     ax.set_facecolor('white')
@@ -32,6 +32,16 @@ def plot_initial_geometry(x_d, y_d, x_b, y_b):
         linewidths=0.75,
         label=f'Boundary points ({len(x_b)})',
     )
+    if extra_points:
+        for label, (x_extra, y_extra) in extra_points.items():
+            ax.scatter(
+                x_extra.detach().cpu().numpy(),
+                y_extra.detach().cpu().numpy(),
+                s=10,
+                alpha=0.45,
+                linewidths=0,
+                label=label,
+            )
 
     cylinder = Circle(
         (0.5, 0.0),
